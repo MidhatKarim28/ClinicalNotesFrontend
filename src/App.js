@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Form, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -8,6 +8,7 @@ function App() {
   const [transcription, setTranscription] = useState('');
   const [clinicalNotes, setClinicalNotes] = useState('');
   const [patientContext, setPatientContext] = useState('');
+  const [error, setError] = useState('');
   const websocketRef = useRef(null);
 
   useEffect(() => {
@@ -21,9 +22,20 @@ function App() {
   const startRecording = () => {
     setIsRecording(true);
     setTranscription('');
-    websocketRef.current = new WebSocket('wss://your-backend-url/ws');
+    setError('');
+    websocketRef.current = new WebSocket('ws://localhost:5000/ws');
     websocketRef.current.onmessage = (event) => {
       setTranscription((prev) => prev + ' ' + event.data);
+    };
+    websocketRef.current.onerror = (event) => {
+      setError('WebSocket error occurred');
+      setIsRecording(false);
+    };
+    websocketRef.current.onclose = () => {
+      if (isRecording) {
+        setError('WebSocket connection closed unexpectedly');
+        setIsRecording(false);
+      }
     };
   };
 
@@ -36,19 +48,22 @@ function App() {
 
   const generateNotes = async () => {
     try {
-      const response = await axios.post('https://your-backend-url/api/RealTimeTranscription/generate-notes', {
+      setError('');
+      const response = await axios.post('http://localhost:5000/api/RealTimeTranscription/generate-notes', {
         transcription: transcription,
         patientContext: patientContext
       });
       setClinicalNotes(response.data);
     } catch (error) {
       console.error('Error generating clinical notes:', error);
+      setError('Failed to generate clinical notes. Please try again.');
     }
   };
 
   return (
     <Container className="mt-5">
       <h1 className="text-center mb-4">AI Clinical Notes Generator</h1>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Row>
         <Col md={6}>
           <Form.Group className="mb-3">
