@@ -1,0 +1,46 @@
+
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.speech-to-text {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.listening {
+  background-color: #f44336;
+}
+
+button svg {
+  margin-right: 10px;
+}
+
+.transcript {
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
