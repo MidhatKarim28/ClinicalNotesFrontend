@@ -1,0 +1,43 @@
+
+.App {
+  text-align: center;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.transcript {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  height: 400px;
+  overflow-y: auto;
+}
+
+.timestamp {
+  font-weight: bold;
+  color: #666;
+  margin-right: 10px;
+}
+
