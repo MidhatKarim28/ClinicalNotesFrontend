@@ -6,6 +6,7 @@ import SpeechToText from './components/SpeechToText';
 function App() {
   return (
     <div className="App">
+      <h1>Speech to Text Transcription</h1>
       <SpeechToText />
     </div>
   );
